@@ -1,15 +1,15 @@
 baseURL = "https://azuredvbb.github.io/"
 languageCode = "en-us"
-title = "MyTestBlog"
+title = "AzureDVBB's Blog"
 theme = "poison"
 paginate = 10
 pluralizelisttitles = false
 publishDir = "docs"
 
 [params]
-    brand = "Testington"                    # name of your site - appears in the sidebar
+    brand = "AzureDVBB's Blog"                    # name of your site - appears in the sidebar
     # brand_image = "/images/test.jpg"    # path to the image shown in the sidebar
-    description = "Update this description..."
+    description = "Just my shared thoughts."
     dark_mode = false                    # optional - defaults to false
 
     # MENU PLACEHOLDER

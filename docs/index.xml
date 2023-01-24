@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MyTestBlog</title>
+    <title>AzureDVBB&#39;s Blog</title>
     <link>https://azuredvbb.github.io/</link>
-    <description>Recent content on MyTestBlog</description>
+    <description>Recent content on AzureDVBB&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Jan 2023 16:53:28 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 Jan 2023 11:54:38 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo on Github Pages</title>
+      <link>https://azuredvbb.github.io/posts/hugo-on-github-pages/</link>
+      <pubDate>Tue, 24 Jan 2023 11:54:38 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/posts/hugo-on-github-pages/</guid>
+      <description>With guides it is easy, but it took me a while to google out the answer, so I shall leave the steps to take generating a HUGO website and posting it onto github for future reference.
+You will need git and hugo installed for this.
+This guide expects you to be familiar with the command line and Github, as well as having read the quick-start guide on HUGO.
+Step 0. - (LINUX) Make sure you have github ssh key setup Step 0.</description>
+    </item>
+    
     <item>
       <title>YUMS - A retrospective</title>
       <link>https://azuredvbb.github.io/posts/yums-a-retrospective/</link>
