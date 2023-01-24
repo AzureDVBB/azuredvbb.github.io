@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About on MyTestBlog</title>
+    <link>https://azuredvbb.github.io/about/</link>
+    <description>Recent content in About on MyTestBlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Jan 2023 16:06:55 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://azuredvbb.github.io/about/about/</link>
+      <pubDate>Mon, 23 Jan 2023 16:06:55 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/about/about/</guid>
+      <description>Welcome to my corner of the internet! This is primarily the place where I keep my notes on the open source projects and repositories I make, or summary posts of things I have learned.
+Hopefully watching the barren landscape here will keep me motivated on doing more stuff!
+Take a beverage of your choice and have a pleasant read! (note: may contain ramblings)
+Who am I? Just a hobby programmer/gamer sharing my knowledge across the internet.</description>
+    </item>
+    
+  </channel>
+</rss>

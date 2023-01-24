@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on MyTestBlog</title>
+    <link>https://azuredvbb.github.io/posts/</link>
+    <description>Recent content in Posts on MyTestBlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Jan 2023 16:53:28 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>YUMS - A retrospective</title>
+      <link>https://azuredvbb.github.io/posts/yums-a-retrospective/</link>
+      <pubDate>Mon, 23 Jan 2023 16:53:28 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/posts/yums-a-retrospective/</guid>
+      <description>This is a blog post for the archival of my YUMS project.
+We had a good run, a month of development that taught me much. But in the end. It all ends the same. Just another bowl of &amp;ldquo;modular&amp;rdquo; sphagetti.
+What was the plan? A simple, barebones implementation that is extendable and scalable. It also should use as few dependancies as possible.
+There was already an immensely more mature and batteries included framework called Evennia.</description>
+    </item>
+    
+  </channel>
+</rss>

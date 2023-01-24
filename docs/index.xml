@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MyTestBlog</title>
+    <link>https://azuredvbb.github.io/</link>
+    <description>Recent content on MyTestBlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Jan 2023 16:53:28 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>YUMS - A retrospective</title>
+      <link>https://azuredvbb.github.io/posts/yums-a-retrospective/</link>
+      <pubDate>Mon, 23 Jan 2023 16:53:28 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/posts/yums-a-retrospective/</guid>
+      <description>This is a blog post for the archival of my YUMS project.
+We had a good run, a month of development that taught me much. But in the end. It all ends the same. Just another bowl of &amp;ldquo;modular&amp;rdquo; sphagetti.
+What was the plan? A simple, barebones implementation that is extendable and scalable. It also should use as few dependancies as possible.
+There was already an immensely more mature and batteries included framework called Evennia.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://azuredvbb.github.io/about/about/</link>
+      <pubDate>Mon, 23 Jan 2023 16:06:55 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/about/about/</guid>
+      <description>Welcome to my corner of the internet! This is primarily the place where I keep my notes on the open source projects and repositories I make, or summary posts of things I have learned.
+Hopefully watching the barren landscape here will keep me motivated on doing more stuff!
+Take a beverage of your choice and have a pleasant read! (note: may contain ramblings)
+Who am I? Just a hobby programmer/gamer sharing my knowledge across the internet.</description>
+    </item>
+    
+  </channel>
+</rss>
