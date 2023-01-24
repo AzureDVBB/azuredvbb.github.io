@@ -20,7 +20,7 @@ This guide expects you to be familiar with the command line and Github, as well 
 
 Every time you log in to your computer you need to ensure the `ssh-agent` is both running and has your own **ssh key** added with the command:
 
-```
+```bash
 ssh-add /path/to/your/keyfile
 ```
 
@@ -68,7 +68,7 @@ Firstly go to the Github website and select your repository, there is a green `C
 
 With that we can use the following command to clone the repository, making a local copy of it:
 
-```
+```bash
 git clone <THE-LINK-YOU-JUST-COPIED>
 ```
 
@@ -78,7 +78,7 @@ Ofcourse replacing **\<THE-LINK-YOU-JUST-COPIED\>** with the actual link.
 
 Navigate into the newly downloaded folder and use the following command:
 
-```
+```bash
 hugo new site ./ --force
 ```
 
@@ -126,7 +126,7 @@ Luckily it is fairly simple, just go to the [HUGO theme list](https://themes.goh
 
 Once done you have to add it to your own website with the following command:
 
-```
+```bash
 git submodule add --depth=1 <LINK-TO-THEME> themes/<THEME-NAME>
 ```
 
@@ -138,7 +138,7 @@ This will make sure that you not only clone it, but will be kept up to date and 
 
 To update themes added via submodule, you can use the following command:
 
-```
+```bash
 git submodule update --recursive --remote
 ```
 
@@ -169,13 +169,13 @@ Then we can run `hugo server --buildDrafts` and visit the shown local address to
 
 Finally we can build the website statically by using the following command:
 
-```
+```bash
 hugo
 ```
 
 Then we can simply use the following commands to upload the changes to our repository:
 
-```
+```bash
 git add .
 git commit -m "Write your message here."
 git push
