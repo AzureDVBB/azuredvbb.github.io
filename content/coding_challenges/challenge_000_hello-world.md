@@ -1,7 +1,7 @@
 ---
 title: "Coding Challenge 000 - Hello World!"
 date: 2023-02-02T16:29:45+01:00
-draft: true
+draft: false
 ---
 
 ## Objectives Summary
