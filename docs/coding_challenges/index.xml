@@ -6,7 +6,17 @@
     <description>Recent content in Coding_challenges on AzureDVBB&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Feb 2023 16:29:45 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/coding_challenges/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Feb 2023 12:44:03 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/coding_challenges/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Challenge 001 - Fibonacci Numbers</title>
+      <link>https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/</link>
+      <pubDate>Thu, 09 Feb 2023 12:44:03 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/</guid>
+      <description>Objectives create a command-line application to calculate the n-th fibonacci number accepts 1 command-line argument n (integer between 1 and 80) result is printed to the console (standard output) Introduction The Fibonacci numbers which form the Fibonacci sequence are a classic mathematical concept that is both easy to implement in code and hard to actually compute for any n-th Fibonacci number.
+Devilishly simple to understand and having a myraid of formulas to calculate it, and even more ways to implement it, each having it&amp;rsquo;s own trade-offs make it a good challenge candidate.</description>
+    </item>
+    
     <item>
       <title>Coding Challenge 000 - Hello World!</title>
       <link>https://azuredvbb.github.io/coding_challenges/challenge_000_hello-world/</link>

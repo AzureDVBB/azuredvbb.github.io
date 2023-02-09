@@ -21,7 +21,7 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tags &middot; AzureDVBB&#39;s Blog</title>
+    <title>Challenge 001 - Fibonacci Numbers &middot; AzureDVBB&#39;s Blog</title>
     <meta name="description" content="" />
 
     
@@ -35,7 +35,6 @@
 
 
     
-    <link href="https://azuredvbb.github.io/tags/index.xml" rel="alternate" type="application/rss+xml" title="AzureDVBB's Blog" />
     
     <style>
     body {
@@ -204,11 +203,94 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </aside>
 
         <main class="content container">
-            <h1 class="title">Tags</h1>
-<ul class="entries">
+            <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/">Challenge 001 - Fibonacci Numbers</a>
+    </h1>
+    <time datetime="2023-02-09T12:44:03&#43;0100" class="post-date">
+        February 9, 2023
+    </time>
     
+    
+    
+    
+    
+    
+</div>
+
+  <h2 id="objectives">Objectives</h2>
+<ul>
+<li>create a command-line application to calculate the <code>n</code>-th fibonacci number
+<ul>
+<li>accepts 1 command-line argument <code>n</code> (integer between 1 and 80)</li>
+<li>result is printed to the console (standard output)</li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>The Fibonacci numbers which form the Fibonacci sequence are a classic mathematical concept that is both easy to implement in code and hard to actually compute for any <code>n</code>-th Fibonacci number.</p>
+<p>Devilishly simple to understand and having a myraid of formulas to calculate it, and even more ways to implement it, each having it&rsquo;s own trade-offs make it a good challenge candidate.</p>
+<p>To learn more about the topic and it&rsquo;s applications visit it&rsquo;s <a href="https://en.wikipedia.org/wiki/Fibonacci_number">excellent wikipedia article</a>.</p>
+<h2 id="details">Details</h2>
+<h3 id="calculating-the-n-th-fibonacci-number">Calculating the <code>n</code>-th Fibonacci number</h3>
+<p>The Fibonacci numbers can start from either 0 or 1, here for simplicity we will start the sequence from 0.
+Negative numbers are undefined and should cause an error.</p>
+<p>Mathematically we define the first two fibonacci numbers as follows:
+$$F_{n=0} = 0 ~~~ {and} ~~~ F_{n=1} = 1$$</p>
+<p>To calculate the <code>n</code>-th Fibonacci number we can use the following formula:
+$$F_n = F_{n-1} + F_{n-2}$$</p>
+<p>That is, adding the previous two numbers together forms the next one.</p>
+<p><strong>Hint</strong>: recursive programs can have a stack overflow or recursion error if a function refers to itself too many times (too deep a recursion) in most languages.</p>
+<h3 id="command-line-arguments">Command-line arguments</h3>
+<p>To specify <code>n</code> for the formula we will use the syntax <code>-n NUMBER</code> to pass in the variable.</p>
+<p>In our case n is equal to or higher then 0, and can go up to 80.
+Numbers that are outside the bounds should cause a program error, as numbers in the negative are undefined, while numbers greater then 80 would cause integer overflows.</p>
+<p>Full example syntaxt (your mileage may vary depending on platform and language):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>fib.exe -n 55
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="error-handling">Error handling</h3>
+<p>The program should handle general errors that arise from faulty input from the user, such as but not limited to:</p>
+<ul>
+<li>Inputting text instead of a number</li>
+<li>floating point instead of integer number</li>
+<li>input nothing</li>
 </ul>
 
+  <hr>
+<div class="footer">
+    
+	    
+            
+        
+	    
+    
+</div>
+
+  <div class="article-toc " >
+    <h4></h4>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#objectives">Objectives</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#details">Details</a>
+      <ul>
+        <li><a href="#calculating-the-n-th-fibonacci-number">Calculating the <code>n</code>-th Fibonacci number</a></li>
+        <li><a href="#command-line-arguments">Command-line arguments</a></li>
+        <li><a href="#error-handling">Error handling</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+</div>
         </main>
     </body>
 </html>

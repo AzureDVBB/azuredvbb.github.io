@@ -3,12 +3,15 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://azuredvbb.github.io/</loc>
-    <lastmod>2023-02-02T16:29:45+01:00</lastmod>
+    <lastmod>2023-02-09T12:44:03+01:00</lastmod>
   </url><url>
-    <loc>https://azuredvbb.github.io/coding_challenges/challenge_000_hello-world/</loc>
-    <lastmod>2023-02-02T16:29:45+01:00</lastmod>
+    <loc>https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/</loc>
+    <lastmod>2023-02-09T12:44:03+01:00</lastmod>
   </url><url>
     <loc>https://azuredvbb.github.io/coding_challenges/</loc>
+    <lastmod>2023-02-09T12:44:03+01:00</lastmod>
+  </url><url>
+    <loc>https://azuredvbb.github.io/coding_challenges/challenge_000_hello-world/</loc>
     <lastmod>2023-02-02T16:29:45+01:00</lastmod>
   </url><url>
     <loc>https://azuredvbb.github.io/posts/hugo-on-github-pages/</loc>
