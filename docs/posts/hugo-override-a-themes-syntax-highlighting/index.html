@@ -21,7 +21,7 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Posts &middot; AzureDVBB&#39;s Blog</title>
+    <title>Hugo - Override a Theme&#39;s Syntax Highlighting &middot; AzureDVBB&#39;s Blog</title>
     <meta name="description" content="" />
 
     
@@ -35,7 +35,6 @@
 
 
     
-    <link href="https://azuredvbb.github.io/posts/index.xml" rel="alternate" type="application/rss+xml" title="AzureDVBB's Blog" />
     
     <style>
     body {
@@ -208,41 +207,110 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </aside>
 
         <main class="content container">
-            <h1 class="title">Posts</h1>
-<ul class="entries">
+            <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/">Hugo - Override a Theme&#39;s Syntax Highlighting</a>
+    </h1>
+    <time datetime="2023-02-09T14:59:43&#43;0100" class="post-date">
+        February 9, 2023
+    </time>
     
-        <h3 style="text-align: center;">2023</h3>
-        
-            <li>
-                <span class="title">
-                    <a href="/posts/hugo-override-a-themes-syntax-highlighting/">Hugo - Override a Theme&#39;s Syntax Highlighting</a>
-                </span>
-                <span class="published">
-                    <time class="pull-right post-list">February 9, 2023</time>
-                </span>
-            </li>
-        
-            <li>
-                <span class="title">
-                    <a href="/posts/hugo-on-github-pages/">Hugo on Github Pages</a>
-                </span>
-                <span class="published">
-                    <time class="pull-right post-list">January 24, 2023</time>
-                </span>
-            </li>
-        
-            <li>
-                <span class="title">
-                    <a href="/posts/yums-a-retrospective/">YUMS - A retrospective</a>
-                </span>
-                <span class="published">
-                    <time class="pull-right post-list">January 23, 2023</time>
-                </span>
-            </li>
-        
     
-</ul>
+    
+    
+    
+    
+</div>
 
+  <p>In the theme that I use on this site <a href="https://github.com/lukeorth/poison">Poison</a>, the syntax highlighting for codeblocks was not working by default.</p>
+<p>Hugo gives us the ability to override theme files by the <code>static/</code> folder in our site&rsquo;s root directory (where <code>config.toml</code> lives).</p>
+<p>More specifically, in the case of Poison, the file in question was under:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>themes/poison/static/css/syntax.css
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="generate-the-desired-syntax-highlighting-stylesheet">Generate the desired syntax highlighting stylesheet</h2>
+<p>To override it we need to generate a <code>syntax.css</code> file for our desired syntax highlighting style.
+Hugo has a guide to do so <a href="https://gohugo.io/content-management/syntax-highlighting/">available in their documentation</a>, but in short use the following command in the site&rsquo;s root directory:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo gen chromastyles --style=monokai &gt; syntax.css
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This generates the <code>monokai</code> style, changing the <code>--style=</code> parameter will allow you to use other supported styles, check the <a href="https://gohugo.io/content-management/syntax-highlighting/#list-of-chroma-highlighting-languages">list of availablable styles in their documentation</a>.</p>
+<h2 id="move-the-file-into-the-correct-subfolder">Move the file into the correct subfolder</h2>
+<p>In our case, we need to put the file here: <code>static/css/syntax.css</code></p>
+<p>This will override the theme&rsquo;s file inside <code>/themes/THEMENAME/static/css/syntax.css</code></p>
+<h2 id="setup-the-configtoml-file-for-our-site">Setup the <code>config.toml</code> file for our site</h2>
+<p>Now we need to change the configuration (or ensure that it is setup) so that syntax highlighting will be supported.</p>
+<p><a href="https://gohugo.io/getting-started/configuration-markup/#highlight">As per the default from their documentation available here</a>, this was added to my <code>config.toml</code> file to make sure everything works fine:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">markup</span>]
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">markup</span>.<span style="color:#a6e22e">highlight</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">anchorLineNos</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">codeFences</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">guessSyntax</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">hl_Lines</span> = <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">hl_inline</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lineAnchors</span> = <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lineNoStart</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lineNos</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">lineNumbersInTable</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">noClasses</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">noHl</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">style</span> = <span style="color:#e6db74">&#39;monokai&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tabWidth</span> = <span style="color:#ae81ff">4</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+  <hr>
+<div class="footer">
+    
+	    
+            
+        
+	    
+    
+</div>
+
+  <div class="article-toc " >
+    <h4></h4>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#generate-the-desired-syntax-highlighting-stylesheet">Generate the desired syntax highlighting stylesheet</a></li>
+    <li><a href="#move-the-file-into-the-correct-subfolder">Move the file into the correct subfolder</a></li>
+    <li><a href="#setup-the-configtoml-file-for-our-site">Setup the <code>config.toml</code> file for our site</a></li>
+  </ul>
+</nav>
+</div>
+
+</div>
         </main>
     </body>
 </html>
