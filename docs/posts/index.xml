@@ -6,7 +6,19 @@
     <description>Recent content in Posts on AzureDVBB&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Jan 2023 11:54:38 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Feb 2023 14:59:43 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo - Override a Theme&#39;s Syntax Highlighting</title>
+      <link>https://azuredvbb.github.io/posts/hugo-syntax-highlighting/</link>
+      <pubDate>Thu, 09 Feb 2023 14:59:43 +0100</pubDate>
+      
+      <guid>https://azuredvbb.github.io/posts/hugo-syntax-highlighting/</guid>
+      <description>In the theme that I use on this site Poison, the syntax highlighting for codeblocks was not working by default.
+Hugo gives us the ability to override theme files by the static/ folder in our site&amp;rsquo;s root directory (where config.toml lives).
+More specifically, in the case of Poison, the file in question was under:
+1 themes/poison/static/css/syntax.css Generate the desired syntax highlighting stylesheet To override it we need to generate a syntax.</description>
+    </item>
+    
     <item>
       <title>Hugo on Github Pages</title>
       <link>https://azuredvbb.github.io/posts/hugo-on-github-pages/</link>
