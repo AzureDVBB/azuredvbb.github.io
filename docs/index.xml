@@ -6,7 +6,17 @@
     <description>Recent content on AzureDVBB&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Feb 2023 14:59:43 +0100</lastBuildDate><atom:link href="https://azuredvbb.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Apr 2023 19:37:15 +0200</lastBuildDate><atom:link href="https://azuredvbb.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A guide for Simple, Stateful and Interactive Webapps in Rust with Yew v0.20.0</title>
+      <link>https://azuredvbb.github.io/posts/rust-and-yew-for-webapps/</link>
+      <pubDate>Sun, 09 Apr 2023 19:37:15 +0200</pubDate>
+      
+      <guid>https://azuredvbb.github.io/posts/rust-and-yew-for-webapps/</guid>
+      <description>Rust has been a language of interest and trepadation to me for some time, with it&amp;rsquo;s functional programming and strict rules (coming from python). The one thing I have identified as the most difficult part in creating my projects is&amp;hellip; programming a GUI (graphical user interface).
+There are a host of competing frameworks and libraries, each with it&amp;rsquo;s own trade-offs and complexity. There&amp;rsquo;s even a website to track to track the state of these, humorously called are we gui yet?</description>
+    </item>
+    
     <item>
       <title>Hugo - Override a Theme&#39;s Syntax Highlighting</title>
       <link>https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/</link>

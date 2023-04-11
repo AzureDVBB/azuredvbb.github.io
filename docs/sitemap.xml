@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://azuredvbb.github.io/</loc>
-    <lastmod>2023-02-09T14:59:43+01:00</lastmod>
+    <loc>https://azuredvbb.github.io/posts/rust-and-yew-for-webapps/</loc>
+    <lastmod>2023-04-09T19:37:15+02:00</lastmod>
   </url><url>
-    <loc>https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/</loc>
-    <lastmod>2023-02-09T14:59:43+01:00</lastmod>
+    <loc>https://azuredvbb.github.io/</loc>
+    <lastmod>2023-04-09T19:37:15+02:00</lastmod>
   </url><url>
     <loc>https://azuredvbb.github.io/posts/</loc>
+    <lastmod>2023-04-09T19:37:15+02:00</lastmod>
+  </url><url>
+    <loc>https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/</loc>
     <lastmod>2023-02-09T14:59:43+01:00</lastmod>
   </url><url>
     <loc>https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/</loc>

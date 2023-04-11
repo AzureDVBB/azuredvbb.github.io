@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    <script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/light_dark.js"></script>
+<script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/tabs.js"></script>
+
+
+<script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/katex.min.js"></script>
+
+
+<script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/auto-render.min.js"></script>
+
+
+<script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/katex.js"></script>
+<script defer language="javascript" type="text/javascript" src="https://azuredvbb.github.io/js/toc.js"></script>
+
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="generator" content="Hugo 0.111.3">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A guide for Simple, Stateful and Interactive Webapps in Rust with Yew v0.20.0 &middot; AzureDVBB&#39;s Blog</title>
+    <meta name="description" content="" />
+
+    
+    <link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/poole.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/syntax.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/hyde.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/poison.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/fonts.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/katex.min.css">
+<link type="text/css" rel="stylesheet" href="https://azuredvbb.github.io/css/tabs.css">
+
+
+    
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --code-color: #bf616a;
+        --code-background-color: #f9f9f9;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --code-color: #ff7f7f;
+        --code-background-color: #393D47;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="">
+        <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+        
+            <a href="https://azuredvbb.github.io/">
+                <h1>AzureDVBB&#39;s Blog</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    Just my shared thoughts.
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+        
+        
+        
+        
+            
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+            
+                
+            
+        
+        
+            
+                
+            
+                
+            
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                        <li class="sub-heading">
+                            Recent
+                        </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/posts/rust-and-yew-for-webapps/">A guide for Simple, Stateful and Interactive Webapps in Rust with Yew v0.20.0</a>
+                            </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/">Hugo - Override a Theme&#39;s Syntax Highlighting</a>
+                            </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/posts/hugo-on-github-pages/">Hugo on Github Pages</a>
+                            </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/posts/yums-a-retrospective/">YUMS - A retrospective</a>
+                            </li>
+                        
+                    
+                
+            
+        
+        
+            
+                
+            
+                
+                    <li class="heading">
+                        <a href="/coding_challenges/">Coding Challenges</a>
+                    </li>
+                    
+                        <li class="sub-heading">
+                            Recent
+                        </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/coding_challenges/challenge-001-fibonacci-numbers/">Challenge 001 - Fibonacci Numbers</a>
+                            </li>
+                        
+                            <li class="bullet">
+                                <a href="https://azuredvbb.github.io/coding_challenges/challenge_000_hello-world/">Coding Challenge 000 - Hello World!</a>
+                            </li>
+                        
+                    
+                
+            
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" href="https://github.com/AzureDVBB">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2023 AzureDVBB&#39;s Blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+        <main class="content container">
+            <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://azuredvbb.github.io/posts/rust-and-yew-for-webapps/">A guide for Simple, Stateful and Interactive Webapps in Rust with Yew v0.20.0</a>
+    </h1>
+    <time datetime="2023-04-09T19:37:15&#43;0200" class="post-date">
+        April 9, 2023
+    </time>
+    
+    
+    
+    
+    
+    
+</div>
+
+  <p>Rust has been a language of interest and trepadation to me for some time, with it&rsquo;s functional programming and strict rules (coming from python).
+The one thing I have identified as the most difficult part in creating my projects is&hellip; programming a GUI (graphical user interface).</p>
+<p>There are a host of competing frameworks and libraries, each with it&rsquo;s own trade-offs and complexity.
+There&rsquo;s even a website to track to track the state of these, humorously called <a href="https://www.areweguiyet.com/">are we gui yet?</a></p>
+<p>Suffice to say each application is it&rsquo;s own challange and deserves forethough as to what to use and how.</p>
+<p>With all that said, my personal projects are much smaller in scope and definately not great lookers.
+So I have decided to buld my applications for the web and leverage browsers to do the heavy lifting.</p>
+<p>After several days and not insignificant trial, error and ChatGPT voodoo&hellip; I decided to write a blog post about how to do it so that others may come across it and have a more seamless experience.</p>
+<h2 id="0-prerequisites">0. Prerequisites</h2>
+<h3 id="00-knowledge">0.0. Knowledge</h3>
+<p>This guide expects familiarity with (but provides links to read on) the following topics:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/stable/book/ch01-02-hello-world.html">Rust&rsquo;s project structure</a></li>
+<li><a href="https://doc.rust-lang.org/stable/book/ch05-00-structs.html">Struct</a>&rsquo;s and <a href="https://doc.rust-lang.org/stable/book/ch10-02-traits.html">Trait</a>&rsquo;s</li>
+<li>Cursory knowledge on:
+** <a href="https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html">Borrow Checker</a> (ownership rules)
+** <a href="https://doc.rust-lang.org/stable/book/ch03-02-data-types.html">Datatypes</a>
+** <a href="https://en.wikipedia.org/wiki/HTML">HTML</a> and <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> syntax (for the gui)
+** <a href="https://doc.rust-lang.org/reference/names/preludes.html">preludes</a>
+** <a href="https://doc.rust-lang.org/book/ch13-01-closures.html">closures</a>
+** <a href="https://doc.rust-lang.org/book/ch06-02-match.html">match statements</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch19-06-macros.html">What macros are</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch03-03-how-functions-work.html#functions">functions</a> and <a href="https://doc.rust-lang.org/book/ch05-03-method-syntax.html#method-syntax">methods</a></li>
+<li>Know how to do things in the terminal</li>
+</ul>
+<p>Knowing these apriori is nice, but you can skip this reading and refer to this section if you bump into the terms later on.</p>
+<h3 id="01-software">0.1. Software</h3>
+<p>It goes without saying that you need rust installed.
+And that <code>cargo</code> installed binaries are available under your system&rsquo;s <code>PATH</code> variable so we can invoke them from the terminal.</p>
+<p>To build our webapp and to run a local development server for it we will use <a href="https://trunkrs.dev/">trunk</a>.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cargo install trunk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We also need to add the <a href="https://webassembly.org/">webAssembly (WASM)</a> as a build target so we can build our application.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rustup target add wasm32-unknown-unknown
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="1-setting-up-our-project">1. Setting up our project</h2>
+<h3 id="10-new-binary-crate">1.0. New binary crate</h3>
+<p>Let&rsquo;s create a new project called <strong>yew-simplified</strong> and go into it&rsquo;s directory.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cargo new yew-simplified
+</span></span><span style="display:flex;"><span>cd yew-simplified
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It&rsquo;s good practice to verify our environment works <em>before</em> we start to tinker.
+Which we can do simply by running:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cargo run
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>That should have printed out a &lsquo;Hello World!&rsquo;, confirming everything works.</p>
+<h3 id="11-adding-dependencies">1.1. Adding dependencies</h3>
+<p>Next we need to edit our <code>cargo.toml</code> file to add two new dependencies.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">dependencies</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">stylist</span> = { <span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;0.12.0&#34;</span>, <span style="color:#a6e22e">features</span> = [<span style="color:#e6db74">&#34;yew_integration&#34;</span>] }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">yew</span> = { <span style="color:#a6e22e">version</span> = <span style="color:#e6db74">&#34;0.20.0&#34;</span>, <span style="color:#a6e22e">features</span> = [<span style="color:#e6db74">&#34;csr&#34;</span>] }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://yew.rs/">Yew</a> is our main web-framework so we can build our GUI.
+It is worth noting at this time that there are multiple ways of making a GUI with Yew, but the method I am presenting is, as of this writing, not explained enough that I understood it immediately.</p>
+<p><a href="https://crates.io/crates/stylist">Stylist</a> on the other hand is one of the easier ways of adding CSS styles to our GUI to make it look pretty.
+It also features compile-time checking for valid CSS so it helps during development as well!</p>
+<h3 id="12-making-an-empty-landing-page">1.2. Making an empty Landing Page</h3>
+<p><code>trunk</code> expects a minimal <code>index.html</code> file to act as our webapp&rsquo;s landing page and will not build without it.</p>
+<p>Let&rsquo;s create it then! It&rsquo;s very important to put it at the crate&rsquo;s root (where <code>cargo.toml</code> is) and not inside the <code>src/</code> directory.
+Then fill it in with some basic HTML like so:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Yew Simplified&#34;</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;Yew Simplified&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">body</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;margin: 0; padding: 0;&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And that&rsquo;s done, now we have our project set up we can write our program.
+<code>Yew</code> will be filling in the <code>&lt;body&gt;</code> tag with HTML during runtime to facilitate re-drawing our application.</p>
+<p>We can test that our application works fine by running it with <code>trunk</code>:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>trunk serve --open
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This will build are (unoptimized) application, downloading and building dependancies along the way.
+It will then launch a web-server and using the <code>--open</code> flag will open the locally hosted webapp in our system&rsquo;s default browser.</p>
+<p><strong>NOTE:</strong> So long as the <code>trunk</code> server is running, any changes to the project&rsquo;s files will prompt an automatic build and refresh on the opened page, so we do not need to do anything to see our changes take effect during development.
+Additionally, you can use <code>trunk build</code> to build the website without hosting it.</p>
+<h2 id="2-defining-our-applications-datastructure">2. Defining our application&rsquo;s datastructure</h2>
+<p>The rest of the logic and GUI we will code directly to our main source file under <code>src/main.rs</code>.
+Later we can always refactor our code to separate out more complex segments into their own individual modules when and if needed.</p>
+<p>So far the file should just hold the main function that the application executes whenever it is run.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#e6db74">&#34;Hello, world!&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="21-defining-the-gui-emitted-messages">2.1. Defining the GUI emitted messages</h3>
+<p><a href="">Message passing</a> is the primary way the interface will communicate with our Rust code to determine what to do.
+If there are no messages, our code should do nothing at all, conserving system resources.</p>
+<p>Rust offers a convenient and efficient way of defining messages like this called an <code>enum</code>.</p>
+<p>Let&rsquo;s create a message that will be emitted when a button is pressed.
+We&rsquo;ll add a little bit of complexity by identifying each button with an &lsquo;id&rsquo; number.
+This demonstrates how to the GUI can pass some meaningful data back to our Rust code.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">AppMessage</span>{
+</span></span><span style="display:flex;"><span>    ButtonPressed(<span style="color:#66d9ef">usize</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> the message <code>ButtonPressed(usize)</code> means that the message <code>ButtonPressed</code> holds a value with type <code>usize</code>.
+While we can substitute <code>usize</code> with any other type or struct, in this case we use it because the <code>usize</code> represents a pointer for our architecture (32bit, 64bit etc..) and arrays require this exact pointer type when using it to access an element ( for example: <code>MyArray[elementId]</code>).</p>
+<h3 id="22-defining-our-application-state-struct">2.2. Defining our application state struct</h3>
+<p>Now we need to actually define a <code>struct</code> to hold all of our application&rsquo;s state information, that is all of the persistent data our application needs to hold.</p>
+<p>In this we&rsquo;ll just hold some text to display to the user which we will edit and change to show the GUI reacting.
+We&rsquo;ll also store an array of texts which we&rsquo;ll use to place appropriately labelled buttons onto the screen.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">App</span> {
+</span></span><span style="display:flex;"><span>	displayed_text: String,
+</span></span><span style="display:flex;"><span>    button_texts: Vec<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> for <code>button_texts</code> we used the type <code>Vec&lt;String&gt;</code>, which is just an array that hold values of a single type, <code>String</code> type in this case.
+This is of course a simplification but for our use case holds true.</p>
+<h3 id="23-implementing-defaults-for-the-application-state-data">2.3. Implementing defaults for the application state data</h3>
+<p>So far we just defined what kind of data our application will store, but when we first load the application we need to initialize them with some default values.</p>
+<p>We can accomplish this by implementing the <code>Default</code> trait for our <code>App</code> struct.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Default <span style="color:#66d9ef">for</span> App {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">default</span>() -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        App {
+</span></span><span style="display:flex;"><span>            displayed_text: <span style="color:#e6db74">&#34;Press any button to see a change!&#34;</span>.to_string(),
+</span></span><span style="display:flex;"><span>           	button_texts: <span style="color:#a6e22e">vec</span><span style="color:#f92672">!</span>(
+</span></span><span style="display:flex;"><span>				String::from(<span style="color:#e6db74">&#34;I like change&#34;</span>), 
+</span></span><span style="display:flex;"><span>				String::from(<span style="color:#e6db74">&#34;I hate change&#34;</span>),
+</span></span><span style="display:flex;"><span>			),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> string literals in Rust are of type <code>&amp;str</code> (string slice) and need to be converted into <code>String</code> types, <a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#memory-and-allocation">you can read as to why with this link</a>.
+You can see two ways to accomplish this conversions in the code above.</p>
+<h2 id="3-using-yew-and-stylist-to-draw-our-application-to-the-screen">3. Using <code>Yew</code> and <code>Stylist</code> to draw our application to the screen</h2>
+<p>To reiterate once more, this is just one way of using Yew v0.20.0 to draw a web-based GUI.
+This just so happens to be the way that I found works best, is understandable (by me) and I personally use.</p>
+<p>Please refer to the <a href="https://yew.rs/">Yew documentation</a> to learn more approaches.</p>
+<h3 id="30-adding-our-dependencies">3.0. Adding our dependencies</h3>
+<p>So far we&rsquo;ve not needed to add any dependencies to our <code>src/main.rs</code> file.
+Now however, we will be going deep into making the web GUI with <code>Yew</code> and then making it pretty with <code>Stylist</code> to embed CSS directly in our application.</p>
+<p>Add the following to the top of <code>src/main.rs</code> :</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> stylist::css;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> yew::prelude::<span style="color:#f92672">*</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> stylist has many ways of applying CSS styles, including some <code>Yew</code> integration, it is well worth reading up on it inside it&rsquo;s documentation.
+Using the <code>css!</code> macro is just one I have found to be simple and understandable.</p>
+<h3 id="31-implementing-the-yew-component-trait-on-our-app-struct">3.1. Implementing the Yew <code>Component</code> trait on our App struct</h3>
+<p>Now to actually integrate our <code>App</code> struct with Yew we will need to implement the <code>Component</code> trait and it&rsquo;s 3 required methods:</p>
+<ul>
+<li><code>create</code> 	for initialization (we added default values in <strong>step 2.3.</strong>)</li>
+<li><code>update</code> 	for reacting to GUI sent messages and running our code</li>
+<li><code>view</code> 	for actually building the raw HTML that will be displayed as our GUI</li>
+</ul>
+<p>Let&rsquo;s do that now without much functionality.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Component <span style="color:#66d9ef">for</span> App {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Message</span> <span style="color:#f92672">=</span> AppMessage;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Properties</span> <span style="color:#f92672">=</span> ();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">create</span>(ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        Self::default()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">update</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>, msg: <span style="color:#a6e22e">Self</span>::Message) -&gt; <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>		html!{
+</span></span><span style="display:flex;"><span>			<span style="color:#f92672">&lt;</span>p<span style="color:#f92672">&gt;</span>{<span style="color:#e6db74">&#34;Hello World!&#34;</span>}<span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> the <code>type</code> keyword is a <a href="https://doc.rust-lang.org/reference/items/type-aliases.html">type alias</a>.
+In this case we are not using <code>Properties</code> so we alias that to <a href="https://doc.rust-lang.org/std/primitive.unit.html">the &lsquo;unit&rsquo; type</a>.</p>
+<h3 id="32-starting-the-yew-renderer">3.2. Starting the Yew renderer</h3>
+<p>The final thing to do is to actually call Yew to draw our application in the <code>main()</code> function.</p>
+<p>This has changed drastically in Yew v0.20.0 compared to previous versions, mostly to support new functionality.
+To draw our simple app, edit the <code>main</code> function as such:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	yew::Renderer::<span style="color:#f92672">&lt;</span>App<span style="color:#f92672">&gt;</span>::new().render();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If all went well we now have &lsquo;Hello World!&rsquo; plastered on a blank page!</p>
+<h3 id="33-using-yew-and-stylist-together">3.3. Using <code>Yew</code> and <code>Stylist</code> together</h3>
+<p><strong>Note:</strong> Once more, there are many ways to do this.
+It is just one of the simplest ways I am describing here.
+For more information read the <code>Yew</code> and <code>Stylist</code> documentation.</p>
+<p>With that said, let&rsquo;s use the <code>css!</code> macro to create a style and apply it to our &lsquo;Hello World!&rsquo; paragraph!
+Edit the <code>view</code> method as such:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> hello_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           background-color: coral;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        html!{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;</span>p class<span style="color:#f92672">=</span>{hello_style}<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                {<span style="color:#e6db74">&#34;Hello World!&#34;</span>}
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Take note how we capture the output of the <code>css!</code> macro into a variable and then use it inside Yew&rsquo;s <code>html!</code> macro, by putting it in curly braces <code>{}</code>.
+With Yew we can run code while building the page&rsquo;s HTML and embed the results as valid HTML text.</p>
+<p>Also note how we added the style by the paragraphs&rsquo; <code>class=</code> attribute.
+This is because Stylist creates unique style classes within the <code>&lt;head&gt;</code> of our page, then simply assigns the appropriate classes to our elements.</p>
+<h2 id="4-adding-interactivity-to-our-application">4. Adding interactivity to our application</h2>
+<h3 id="41-a-single-button-with-a-callback">4.1. A single button with a callback</h3>
+<p>The simplest form of interaction is clicking buttons, without much fanfare let&rsquo;s add one now!</p>
+<p>Modify our <code>view</code> method as such:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> hello_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           background-color: coral;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_press <span style="color:#f92672">=</span> ctx.link().callback(<span style="color:#f92672">|</span>_<span style="color:#f92672">|</span> AppMessage::ButtonPressed(<span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        html!{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>p class<span style="color:#f92672">=</span>{hello_style}<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    {<span style="color:#e6db74">&#34;Hello World!&#34;</span>}
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>button onclick<span style="color:#f92672">=</span>{button_press}<span style="color:#f92672">&gt;</span>{ <span style="color:#e6db74">&#34;iButton&#34;</span> }<span style="color:#f92672">&lt;/</span>button<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Here we created a button event with <code>ctx.link().callback(...)</code> , a callback is a function that will be called when a specific event happens, storing the resulting callback in a variable.
+This helps separate out the code we write outside of the <code>html!</code> so it is easier to read.</p>
+<p>In this case the callback will invoke an anonymouse (unnamed) function we defined in a closure and return an <code>AppMessage</code> which we can later use to identify what event has fired.
+The closure itself takes in a Yew even type (<code>MouseEvent</code> in this case) which we do not use, so we ignore it by assigning it to <code>_</code> .</p>
+<p><strong>Note:</strong> to read more on Yew context&rsquo;s <a href="https://yew.rs/docs/next/concepts/contexts">see the documentation</a>.
+But in this guide, we essentially just use it as a way to pass messages back to our <code>App</code> struct.</p>
+<h3 id="42-making-the-application-display-state-data">4.2. Making the application display state data</h3>
+<p>So far the application displayed just a static, unchanging interface.
+Now let&rsquo;s add some much needed interactivity.</p>
+<p>Firstly, we are going to use our <code>App</code> struct&rsquo;s <code>displayed_text</code> to put text on the screen, instead of the standard hello world so far.</p>
+<p>Let&rsquo;s modify our <code>view</code> method once more as follows:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> hello_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           background-color: coral;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_press <span style="color:#f92672">=</span> ctx.link().callback(<span style="color:#f92672">|</span>_<span style="color:#f92672">|</span> AppMessage::ButtonPressed(<span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        html!{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>p class<span style="color:#f92672">=</span>{hello_style}<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    {self.displayed_text.clone()}
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>button onclick<span style="color:#f92672">=</span>{button_press}<span style="color:#f92672">&gt;</span>{ <span style="color:#e6db74">&#34;iButton&#34;</span> }<span style="color:#f92672">&lt;/</span>button<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Here we replaced our <code>&quot;Hello World!&quot;</code> with a reference to our desired data inside <code>App</code> struct.
+And just like that we are halfway done!</p>
+<p><strong>Note:</strong> We needed to clone the data we use from <code>App</code> as the <code>html!</code> macro consumes it, taking ownership.
+Because we only have a borrowed reference to it (read-only) we needed to create a clone of it for the macro to consume.</p>
+<h3 id="43-updating-view-based-on-callback-appmessages">4.3. Updating view based on callback <code>AppMessage</code>s</h3>
+<p>Finally we can focus on running application code now we have event callbacks sending messages to run code to!</p>
+<p>In this case, let&rsquo;s conditionally run code only when a message comes in that we have a defined behavior for.</p>
+<p>Modify the <code>update</code> method as follows:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">update</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>, msg: <span style="color:#a6e22e">Self</span>::Message) -&gt; <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> msg {
+</span></span><span style="display:flex;"><span>            AppMessage::ButtonPressed(id) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                self.displayed_text <span style="color:#f92672">=</span> format!(
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;You pressed the &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; button with id &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;, press another!&#34;</span>,
+</span></span><span style="display:flex;"><span>                    self.button_texts[id],
+</span></span><span style="display:flex;"><span>                    id,
+</span></span><span style="display:flex;"><span>                );
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> in this case we return <code>true</code> from the update method when we successfully match against a message.
+This signals to Yew that it needs to call the <code>view</code> method again to re-draw our screen.
+Returning false here (which <code>match</code> does for us) will signal Yew that there is no need to re-draw our application.</p>
+<h3 id="44-dynamically-creating-many-buttons">4.4. Dynamically creating many buttons</h3>
+<p>Lastly, let&rsquo;s add a bit of complexity to our <code>view</code> method to dynamically populate the buttons, based on the strings inside <code>App.button_texts</code> .</p>
+<p>This will demonstrate how to programmatically add elements to our HTML website.</p>
+<p>Modify the <code>view</code> function as follows:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> hello_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           background-color: coral;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            background-color: LightGreen;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_list <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>self.button_texts.len())
+</span></span><span style="display:flex;"><span>            .map(<span style="color:#f92672">|</span>id<span style="color:#f92672">|</span> {
+</span></span><span style="display:flex;"><span>                html! {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>button class<span style="color:#f92672">=</span>{ button_style.clone() } onclick<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>                ctx
+</span></span><span style="display:flex;"><span>                    .link()
+</span></span><span style="display:flex;"><span>                    .callback(<span style="color:#66d9ef">move</span> <span style="color:#f92672">|</span>_<span style="color:#f92672">|</span> AppMessage::ButtonPressed(id))
+</span></span><span style="display:flex;"><span>                }<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    { <span style="color:#f92672">&amp;</span>self.button_texts[id].to_string() }
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>button<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>            .collect::<span style="color:#f92672">&lt;</span>Html<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        html!{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>p class<span style="color:#f92672">=</span>{hello_style}<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    {self.displayed_text.clone()}
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                { button_list }
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Here we replaced the old button handling logic with the <code>button_list</code> variable, that holds a computed HTML section.</p>
+<p>We iterate through our <code>App.button_texts</code> array, calling the <code>html!</code> every time to create a button with a set style, including the in-line closure to generate the callback message.
+We also need to call <code>collect</code> on it to squash the array into a single HTML definition so we can replace the old button definition within our return HTML document.</p>
+<h2 id="5-conclusion">5. Conclusion</h2>
+<p>While in no way exhaustive, we saw one way how to make a simple web application with Rust.</p>
+<p>From here on out it&rsquo;s just a case of changing the <code>view</code> method to make our application prettier and render more things, changing the <code>update</code> method to run application code on event messages and adding more of them in the <code>AppMessage</code> struct.</p>
+<p>We could refactor our code to separate out the logic from <code>update</code> or even <code>view</code> , but that is left as an excersise to the reader.</p>
+<p><strong>One final note here</strong> is that the <code>App</code> struct we have made here is just one, monolithic application.
+You could implement more structs as components and have them more self-contained, reducing the amount of re-rendering your browser needs to do to only those elements.
+This is beyond the scope of this guide however.</p>
+<p>I hope that it was coherent and helpful! For those who didn&rsquo;t follow along, here is our finished <code>src/main.rs</code> file in its entierty:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> stylist::css;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> yew::prelude::<span style="color:#f92672">*</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">AppMessage</span>{
+</span></span><span style="display:flex;"><span>    ButtonPressed(<span style="color:#66d9ef">usize</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">App</span> {
+</span></span><span style="display:flex;"><span>    displayed_text: String,
+</span></span><span style="display:flex;"><span>    button_texts: Vec<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Default <span style="color:#66d9ef">for</span> App {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">default</span>() -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        App {
+</span></span><span style="display:flex;"><span>            displayed_text: <span style="color:#e6db74">&#34;Press any button to see a change!&#34;</span>.to_string(),
+</span></span><span style="display:flex;"><span>            button_texts: <span style="color:#a6e22e">vec</span><span style="color:#f92672">!</span>(
+</span></span><span style="display:flex;"><span>                String::from(<span style="color:#e6db74">&#34;I like change&#34;</span>),
+</span></span><span style="display:flex;"><span>                String::from(<span style="color:#e6db74">&#34;I hate change&#34;</span>),
+</span></span><span style="display:flex;"><span>            ),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">impl</span> Component <span style="color:#66d9ef">for</span> App {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Message</span> <span style="color:#f92672">=</span> AppMessage;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Properties</span> <span style="color:#f92672">=</span> ();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">create</span>(ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Self</span> {
+</span></span><span style="display:flex;"><span>        Self::default()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">update</span>(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>, msg: <span style="color:#a6e22e">Self</span>::Message) -&gt; <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">match</span> msg {
+</span></span><span style="display:flex;"><span>            AppMessage::ButtonPressed(id) <span style="color:#f92672">=&gt;</span> {
+</span></span><span style="display:flex;"><span>                self.displayed_text <span style="color:#f92672">=</span> format!(
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;You pressed the &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39; button with id &#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;, press another!&#34;</span>,
+</span></span><span style="display:flex;"><span>                    self.button_texts[id],
+</span></span><span style="display:flex;"><span>                    id,
+</span></span><span style="display:flex;"><span>                );
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">view</span>(<span style="color:#f92672">&amp;</span>self, ctx: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">Context</span><span style="color:#f92672">&lt;</span>Self<span style="color:#f92672">&gt;</span>) -&gt; <span style="color:#a6e22e">Html</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> hello_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           background-color: coral;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_style <span style="color:#f92672">=</span> css!(<span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            background-color: LightGreen;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> button_list <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span><span style="color:#f92672">..</span>self.button_texts.len())
+</span></span><span style="display:flex;"><span>            .map(<span style="color:#f92672">|</span>id<span style="color:#f92672">|</span> {
+</span></span><span style="display:flex;"><span>                html! {
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>button class<span style="color:#f92672">=</span>{ button_style.clone() } onclick<span style="color:#f92672">=</span>{
+</span></span><span style="display:flex;"><span>                ctx
+</span></span><span style="display:flex;"><span>                    .link()
+</span></span><span style="display:flex;"><span>                    .callback(<span style="color:#66d9ef">move</span> <span style="color:#f92672">|</span>_<span style="color:#f92672">|</span> AppMessage::ButtonPressed(id))
+</span></span><span style="display:flex;"><span>                }<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    { <span style="color:#f92672">&amp;</span>self.button_texts[id].to_string() }
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>button<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            })
+</span></span><span style="display:flex;"><span>            .collect::<span style="color:#f92672">&lt;</span>Html<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        html!{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;</span>p class<span style="color:#f92672">=</span>{hello_style}<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                    {self.displayed_text.clone()}
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/</span>p<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>                {button_list}
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/</span>div<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+  <hr>
+<div class="footer">
+    
+	    
+            
+	            <a class="previous-post" href="https://azuredvbb.github.io/posts/hugo-override-a-themes-syntax-highlighting/?ref=footer">« Hugo - Override a Theme&#39;s Syntax Highlighting</a>
+	        
+        
+	    
+    
+</div>
+
+  <div class="article-toc " >
+    <h4></h4>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-prerequisites">0. Prerequisites</a>
+      <ul>
+        <li><a href="#00-knowledge">0.0. Knowledge</a></li>
+        <li><a href="#01-software">0.1. Software</a></li>
+      </ul>
+    </li>
+    <li><a href="#1-setting-up-our-project">1. Setting up our project</a>
+      <ul>
+        <li><a href="#10-new-binary-crate">1.0. New binary crate</a></li>
+        <li><a href="#11-adding-dependencies">1.1. Adding dependencies</a></li>
+        <li><a href="#12-making-an-empty-landing-page">1.2. Making an empty Landing Page</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-defining-our-applications-datastructure">2. Defining our application&rsquo;s datastructure</a>
+      <ul>
+        <li><a href="#21-defining-the-gui-emitted-messages">2.1. Defining the GUI emitted messages</a></li>
+        <li><a href="#22-defining-our-application-state-struct">2.2. Defining our application state struct</a></li>
+        <li><a href="#23-implementing-defaults-for-the-application-state-data">2.3. Implementing defaults for the application state data</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-using-yew-and-stylist-to-draw-our-application-to-the-screen">3. Using <code>Yew</code> and <code>Stylist</code> to draw our application to the screen</a>
+      <ul>
+        <li><a href="#30-adding-our-dependencies">3.0. Adding our dependencies</a></li>
+        <li><a href="#31-implementing-the-yew-component-trait-on-our-app-struct">3.1. Implementing the Yew <code>Component</code> trait on our App struct</a></li>
+        <li><a href="#32-starting-the-yew-renderer">3.2. Starting the Yew renderer</a></li>
+        <li><a href="#33-using-yew-and-stylist-together">3.3. Using <code>Yew</code> and <code>Stylist</code> together</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-adding-interactivity-to-our-application">4. Adding interactivity to our application</a>
+      <ul>
+        <li><a href="#41-a-single-button-with-a-callback">4.1. A single button with a callback</a></li>
+        <li><a href="#42-making-the-application-display-state-data">4.2. Making the application display state data</a></li>
+        <li><a href="#43-updating-view-based-on-callback-appmessages">4.3. Updating view based on callback <code>AppMessage</code>s</a></li>
+        <li><a href="#44-dynamically-creating-many-buttons">4.4. Dynamically creating many buttons</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-conclusion">5. Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+
+</div>
+        </main>
+    </body>
+</html>
